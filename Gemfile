@@ -33,6 +33,15 @@ gem 'jbuilder', '~> 2.5'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  # Use rspec for testing framework
+  gem 'rspec-rails'
+  # Use factory_girl for mocking
+  gem 'factory_girl_rails'
+end
+
+group :test do
+  # Use shoulda-matchers for some simple matchers for tests
+  gem 'shoulda-matchers'
 end
 
 group :development do
