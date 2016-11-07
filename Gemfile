@@ -44,6 +44,8 @@ end
 group :test do
   # Use shoulda-matchers for some simple matchers for tests
   gem 'shoulda-matchers'
+  # Use capybara for integration testing
+  gem 'capybara'
 end
 
 group :development do
