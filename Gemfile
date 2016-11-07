@@ -35,6 +35,8 @@ group :development, :test do
   gem 'byebug', platform: :mri
   # Use rspec for testing framework
   gem 'rspec-rails'
+  # Rails extracted out some assertions used by rspec for controller testing
+  gem 'rails-controller-testing'
   # Use factory_girl for mocking
   gem 'factory_girl_rails'
 end
