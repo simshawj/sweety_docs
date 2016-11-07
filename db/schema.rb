@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161104034638) do
+ActiveRecord::Schema.define(version: 20161106203655) do
 
   create_table "daily_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date     "log_date"
     t.string   "values"
+    t.index ["log_date"], name: "index_daily_logs_on_log_date", using: :btree
   end
 
 end
