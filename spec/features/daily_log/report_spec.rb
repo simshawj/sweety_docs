@@ -49,13 +49,13 @@ describe "starting at reports" do
     end
   end
 
-  it "allows the user to add new entries" do
-    skip
+  it "allows the user to go to new page" do
     # Visit Reports
+    visit "/daily_log/report"
     # Select New
-    # Input Value
-    # Select Submit
-    # Check, min, max, avg are as inputed
+    page.first(".add-item").click
+    # Verify that the term Value is present
+    expect(page).to have_content("Value")
   end
 
   context "selecting different report types" do

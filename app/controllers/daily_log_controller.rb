@@ -45,14 +45,22 @@ class DailyLogController < ApplicationController
 
   def create
     value = Integer(params[:value]) rescue nil
+    # Set date based on how it's presented to the controller
+    if params[:date]
+      date = params[:date]
+    elsif params[:item_date]
+      date = Date.new(params[:item_date][:year].to_i, params[:item_date][:month].to_i, params[:item_date][:day].to_i)
+    end
+
     if value
-      daily_log = DailyLog.find_by(log_date: params[:date])
+      daily_log = DailyLog.find_by(log_date: date)
       if daily_log
         daily_log.add(value)
       else
-        daily_log = DailyLog.new(log_date: params[:date], values: [value])
+        daily_log = DailyLog.new(log_date: date, values: [value])
       end
       if !daily_log.save
+        flash[:error] = daily_log.errors
         render :new
       else
         redirect_to daily_log_report_path
