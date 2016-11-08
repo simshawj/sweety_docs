@@ -1,9 +1,24 @@
-<%= link_to "New Entry", new_daily_log_path, :class => "add-item" %>
-Report Date and type: <%= form_tag("/daily_log/report", method: "get") do %>
-  <%= select_date @date, prefix: :report_date %>
-  <%= select_tag(:type, options_for_select([["Daily", "daily"], ["Month to Date", "mtd"], ["Monthly", "monthly"]], params[:type])) %>
-  <%= submit_tag("Get Report") %>
-<% end %>
-<p>Minimum: <%= @min %></p>
-<p>Maximum: <%= @max %></p>
-<p>Average: <%= @avg %></p>
+<div class="row">
+  <h1>Reports</h1>
+</div>
+<div class="row report-selections">
+  <%= form_tag("/daily_log/report", method: "get") do %>
+    <%= label_tag(:report_date, "Date:") %>
+    <%= select_date @date, prefix: :report_date %>
+    <%= label_tag(:type, "Type:", class: "second-label") %>
+    <%= select_tag(:type, options_for_select([["Daily", "daily"], ["Month to Date", "mtd"], ["Monthly", "monthly"]], params[:type])) %>
+    <%= submit_tag("Get Report") %>
+    <%= link_to "New Entry", new_daily_log_path, :class => "add-item" %>
+  <% end %>
+</div>
+<div class="row results">
+  <div class="col-sm-4">
+    Minimum: <%= @min %>
+  </div>
+  <div class="col-sm-4">
+    Maximum: <%= @max %>
+  </div>
+  <div class="col-sm-4">
+    Average: <%= @avg %>
+  </div>
+</div>

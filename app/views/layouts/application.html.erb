@@ -9,9 +9,24 @@
   </head>
 
   <body>
-    <%= flash.each do |key, value| %>
-      <%= content_tag :div, value, class: "flash #{key}" %>
-    <% end %>
-    <%= yield %>
+    <div id="main-container" class="container">
+      <div class="row">
+        <nav class="navbar navbar-default">
+          <div class="container">
+            <div class="navbar-header">
+              <%= link_to "Sweety", daily_log_report_path, class: "navbar-brand" %>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div class="row">
+        <% flash.each do |key, value| %>
+          <%= content_tag :div, value, class: "alert alert-#{key}" %>
+        <% end %>
+      </div>
+      <div id="main-content" class="row">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>

@@ -1,7 +1,12 @@
-<%= form_tag("/daily_log", method: "post") do %>
-  <%= label_tag(:item_date, "Date: ") %>
-  <%= select_date Date.today, prefix: :item_date %>
-  <%= label_tag(:value, "Value:") %>
-  <%= text_field_tag(:value) %>
-  <%= submit_tag("Submit") %>
-<% end %>
+<div class="row">
+  <h1>Reading Input</h1>
+</div>
+<div class="row">
+  <%= form_tag("/daily_log", method: "post") do %>
+    <%= label_tag(:item_date, "Date: ") %>
+    <%= select_date Date.today, prefix: :item_date %>
+    <%= label_tag(:value, "Value:", class: "second-label") %>
+    <%= text_field_tag(:value) %>
+    <%= submit_tag("Submit") %>
+  <% end %>
+</div>

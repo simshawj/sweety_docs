@@ -60,7 +60,7 @@ class DailyLogController < ApplicationController
         daily_log = DailyLog.new(log_date: date, values: [value])
       end
       if !daily_log.save
-        flash[:error] = daily_log.errors
+        flash[:danger] = daily_log.errors.full_messages.to_sentence.downcase
         render :new
       else
         redirect_to daily_log_report_path
