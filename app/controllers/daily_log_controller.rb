@@ -16,14 +16,14 @@ class DailyLogController < ApplicationController
     # Create a relation containing all elements for the report
     case params[:type]
       when "daily"
-        logs = DailyLog.where(log_date: @date)
+        logs = current_user.daily_log.where(log_date: @date)
       when "mtd"
-        logs = DailyLog.where(log_date: @date.beginning_of_month .. @date)
+        logs = current_user.daily_log.where(log_date: @date.beginning_of_month .. @date)
       when "monthly"
-        logs = DailyLog.where(log_date: (@date - 1.month) .. @date)
+        logs = current_user.daily_log.where(log_date: (@date - 1.month) .. @date)
       else
         # If nothing is supplied, provide the daily report
-        logs = DailyLog.where(log_date: @date)
+        logs = current_user.daily_log.where(log_date: @date)
     end
 
     @min = logs.first.values.first rescue 0

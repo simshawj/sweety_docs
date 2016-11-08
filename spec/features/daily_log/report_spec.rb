@@ -108,6 +108,18 @@ describe "starting at reports" do
         verify_min_max_avg(70,120,96)
       end
     end
+
+    context "more than one user with data on the same day" do
+      let!(:user2) { create(:user, email: "john@doe.com") }
+      let!(:daily_log) { create(:daily_log, user: user) }
+      let!(:daily_log2) { create(:daily_log, user: user2, values:[100]) }
+      it "does not show data for user2" do
+        # Visit Reports
+        visit "/daily_log/report"
+        # Expect min,max,avg to be 80
+        verify_min_max_avg(80,80,80)
+      end
+    end
   end
 
   context "user not signed in" do
