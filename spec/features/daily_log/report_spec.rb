@@ -3,8 +3,8 @@ require 'rails_helper'
 describe "starting at reports" do
 
   context "user signed in" do
+    let!(:user) { create(:user) }
     before(:each) do
-      user = create(:user)
       login_as(user, :scope => :user)
     end
 
@@ -19,7 +19,7 @@ describe "starting at reports" do
       end
       context "with data for today" do
         # Add a daily_log for today
-        let!(:daily_log) { create(:daily_log, values:[80, 90]) }
+        let!(:daily_log) { create(:daily_log, values:[80, 90], user: user) }
         it "displays today's results if data exists for today" do
           # Visit Reports
           visit "/daily_log/report"
@@ -42,7 +42,7 @@ describe "starting at reports" do
         end
       end
       context "data exists" do
-        let!(:daily_log) { create(:daily_log, log_date: Date.strptime("11-4-2016", "%m-%d-%Y"), values:[80, 90]) }
+        let!(:daily_log) { create(:daily_log, log_date: Date.strptime("11-4-2016", "%m-%d-%Y"), values:[80, 90], user: user) }
         it "displays the results for that day" do
           # Visit Reports
           visit "/daily_log/report"
@@ -65,9 +65,9 @@ describe "starting at reports" do
     end
 
     context "selecting different report types" do
-      let!(:daily_log1) { create(:daily_log, log_date: Date.strptime("11-1-2016", "%m-%d-%Y"), values: [89, 72, 100, 114]) }
-      let!(:daily_log2) { create(:daily_log, log_date: Date.strptime("10-28-2016", "%m-%d-%Y"), values: [77, 70, 80, 120]) }
-      let!(:daily_log3) { create(:daily_log, log_date: Date.strptime("11-6-2016", "%m-%d-%Y"), values: [100, 110, 105, 111]) }
+      let!(:daily_log1) { create(:daily_log, log_date: Date.strptime("11-1-2016", "%m-%d-%Y"), values: [89, 72, 100, 114], user: user) }
+      let!(:daily_log2) { create(:daily_log, log_date: Date.strptime("10-28-2016", "%m-%d-%Y"), values: [77, 70, 80, 120], user: user) }
+      let!(:daily_log3) { create(:daily_log, log_date: Date.strptime("11-6-2016", "%m-%d-%Y"), values: [100, 110, 105, 111], user: user) }
       let(:report_date) { "11-6-2016" }
 
       it "displays the correct data for daily reports" do
@@ -111,7 +111,12 @@ describe "starting at reports" do
   end
 
   context "user not signed in" do
-
+    it "sends the user to sign in" do
+      # Visit Reports
+      visit "/daily_log/report"
+      # Expect to be on sign in page
+      expect(page).to have_content("sign up")
+    end
   end
 
   # Function to check min, max, avg value

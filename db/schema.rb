@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161108171927) do
+ActiveRecord::Schema.define(version: 20161108183742) do
 
   create_table "daily_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date     "log_date"
     t.string   "values"
+    t.integer  "user_id"
     t.index ["log_date"], name: "index_daily_logs_on_log_date", using: :btree
+    t.index ["user_id"], name: "index_daily_logs_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

@@ -4,10 +4,11 @@ describe DailyLog do
 
   it { is_expected.to validate_presence_of(:log_date) }
   it { is_expected.to validate_presence_of(:values) }
+  it { is_expected.to belong_to(:user) }
 
   describe "uniqueness" do
     subject { create(:daily_log) }
-    it { is_expected.to validate_uniqueness_of(:log_date) }
+    it { is_expected.to validate_uniqueness_of(:log_date).scoped_to(:user_id) }
   end
 
   it "allows for multiple values to be inputed" do

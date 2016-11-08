@@ -55,11 +55,11 @@ class DailyLogController < ApplicationController
 
     # Create entry if we have a value to try using
     if value
-      daily_log = DailyLog.find_by(log_date: date)
+      daily_log = current_user.daily_log.find_by(log_date: date)
       if daily_log
         daily_log.add(value)
       else
-        daily_log = DailyLog.new(log_date: date, values: [value])
+        daily_log = current_user.daily_log.new(log_date: date, values: [value])
       end
       if !daily_log.save
         flash[:danger] = daily_log.errors.full_messages.to_sentence.downcase

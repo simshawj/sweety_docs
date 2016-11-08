@@ -1,10 +1,12 @@
 class DailyLog < ApplicationRecord
   validates :log_date, presence: true
-  validates :log_date, uniqueness: true
+  validates :log_date, :uniqueness => {:scope => :user_id}
   validates :values, presence: true
   validate  :values_is_array
   validate  :max_four_values
   validate  :all_values_are_integers
+
+  belongs_to :user
 
   serialize :values
 

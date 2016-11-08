@@ -3,14 +3,15 @@ require 'rails_helper'
 describe DailyLogController do
 
   context "user signed in" do
+    let!(:user) { create(:user) }
     before(:each) do
-      sign_in create(:user)
+      sign_in user
     end
 
     describe "GET #report" do
-      let!(:daily_log1) { create(:daily_log, log_date: Date.strptime("11-1-2016", "%m-%d-%Y"), values: [89, 72, 100, 114]) }
-      let!(:daily_log2) { create(:daily_log, log_date: Date.strptime("10-28-2016", "%m-%d-%Y"), values: [77, 70, 80, 120]) }
-      let!(:daily_log3) { create(:daily_log, log_date: Date.strptime("11-6-2016", "%m-%d-%Y"), values: [100, 110, 105, 111]) }
+      let!(:daily_log1) { create(:daily_log, log_date: Date.strptime("11-1-2016", "%m-%d-%Y"), values: [89, 72, 100, 114], user: user) }
+      let!(:daily_log2) { create(:daily_log, log_date: Date.strptime("10-28-2016", "%m-%d-%Y"), values: [77, 70, 80, 120], user: user) }
+      let!(:daily_log3) { create(:daily_log, log_date: Date.strptime("11-6-2016", "%m-%d-%Y"), values: [100, 110, 105, 111], user: user) }
       let(:report_date) { "11-6-2016" }
       let(:empty_date) { Date.strptime("11-6-2015", "%m-%d-%Y") } 
       context "daily report" do
@@ -89,7 +90,7 @@ describe DailyLogController do
           end
         end
         context "2nd-4th entry of the day" do
-          let!(:daily_log) {create(:daily_log)}
+          let!(:daily_log) {create(:daily_log, user: user)}
           it "does not create a daily_log entry" do
             expect { post :create, params: {value: value, date: date} }.to_not change{DailyLog.count}
           end
@@ -110,7 +111,7 @@ describe DailyLogController do
           expect { post :create, params: {value: value, date: date} }.to_not change{DailyLog.count}
         end
         it "does not increase the value count" do
-          daily_log = create(:daily_log)
+          daily_log = create(:daily_log, user: user)
           expect { post :create, params: {value: value, date: date} }.to_not change{daily_log.reload.values.count}
         end
         it "renders the new template" do
@@ -120,7 +121,7 @@ describe DailyLogController do
       end
 
       context "with more than 4 values total" do
-        let!(:daily_log) { create(:daily_log, values: [94, 78, 100, 82]) }
+        let!(:daily_log) { create(:daily_log, values: [94, 78, 100, 82], user: user) }
         let(:value) { 89 }
         let(:date) { Date.today }
         it "does not increase the value count" do

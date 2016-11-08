@@ -3,8 +3,8 @@ require "rails_helper"
 describe "New Log Form" do
 
   context "user signed in" do
+    let!(:user) { create(:user) }
     before(:each) do
-      user = create(:user)
       login_as(user, :scope => :user)
     end
 
@@ -32,7 +32,7 @@ describe "New Log Form" do
     end
 
     context "entry already created" do
-      let!(:daily_log) { create(:daily_log) }
+      let!(:daily_log) { create(:daily_log, user: user) }
       it "adds a new value if date has values" do
         # Vist new log page
         visit "daily_log/new"
@@ -46,7 +46,7 @@ describe "New Log Form" do
     end
 
     context "4 values already" do
-      let!(:daily_log) { create(:daily_log, values: [90,90,90,90]) }
+      let!(:daily_log) { create(:daily_log, values: [90,90,90,90], user: user) }
       it "displays an error if entry couldn't be saved" do
         # Visit new log page
         visit "daily_log/new"
