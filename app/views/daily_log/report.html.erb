@@ -1,6 +1,6 @@
 Report Date and type: <%= form_tag("/daily_log/report", method: "get") do %>
   <%= select_date @date, prefix: :report_date %>
-  <%= select_tag(:type, options_for_select([["Daily", "daily"], ["Month to Date", "mtd"], ["Monthly", "monthly"]])) %>
+  <%= select_tag(:type, options_for_select([["Daily", "daily"], ["Month to Date", "mtd"], ["Monthly", "monthly"]], params[:type])) %>
   <%= submit_tag("Get Report") %>
 <% end %>
 <p>Minimum: <%= @min %></p>
