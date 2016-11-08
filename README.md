@@ -1,24 +1,3 @@
-# README
+# Sweety
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This is my submission for the Sweety code challenge with CodeTheory.  Written in Ruby on Rails utililizing MySQL for the database and tested with rspec and capybara.  Allows users to input their glucose readings up to four times daily in order to be able to track daily and monthly trends.
