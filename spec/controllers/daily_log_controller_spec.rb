@@ -3,6 +3,9 @@ require 'rails_helper'
 describe DailyLogController do
 
   context "user signed in" do
+    before(:each) do
+      sign_in create(:user)
+    end
 
     describe "GET #report" do
       let!(:daily_log1) { create(:daily_log, log_date: Date.strptime("11-1-2016", "%m-%d-%Y"), values: [89, 72, 100, 114]) }
@@ -136,12 +139,23 @@ describe DailyLogController do
   end
 
   context "user not signed in" do
-    describe "Get #reports" do
-      it "displays an error message" do
+    describe "GET #reports" do
+      it "is not successful" do
         get :report
-        expect(flash[:danger]).to be_present
+        expect(response).to_not be_success
       end
-      it "sets all values to 0"
+    end
+    describe "GET #new" do
+      it "is not successful" do
+        get :new
+        expect(response).to_not be_success
+      end
+    end
+    describe "POST #create" do
+      it "is not successful" do
+        post :create, params: {value: 82, date: Date.today}
+        expect(response).to_not be_success
+      end
     end
   end
 end

@@ -1,4 +1,5 @@
 class DailyLogController < ApplicationController
+  before_action :authenticate_user!
 
   def report
     if params[:date]

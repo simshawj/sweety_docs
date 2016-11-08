@@ -3,6 +3,10 @@ require "rails_helper"
 describe "New Log Form" do
 
   context "user signed in" do
+    before(:each) do
+      user = create(:user)
+      login_as(user, :scope => :user)
+    end
 
     context "no entry for date" do
 
@@ -60,12 +64,8 @@ describe "New Log Form" do
     it "displays an error message" do
       # Visit new log page
       visit "daily_log/new"
-      # Input value
-      fill_in "value", with: "80"
-      # Hit Submit
-      click_button("Submit")
-      # Verify error message
-      expect(page).to have_content("signed in")
+      # Should show to sign up
+      expect(page).to have_content("sign up")
     end
   end
 
