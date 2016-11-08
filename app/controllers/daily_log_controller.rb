@@ -52,6 +52,7 @@ class DailyLogController < ApplicationController
       date = Date.new(params[:item_date][:year].to_i, params[:item_date][:month].to_i, params[:item_date][:day].to_i)
     end
 
+    # Create entry if we have a value to try using
     if value
       daily_log = DailyLog.find_by(log_date: date)
       if daily_log
